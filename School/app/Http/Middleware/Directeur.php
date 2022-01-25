@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Middleware;
-use App\Models\Code;
+
 use Closure;
 use Illuminate\Http\Request;
 
-class SafeRegister
+class Directeur
 {
     /**
      * Handle an incoming request.
@@ -16,17 +16,10 @@ class SafeRegister
      */
     public function handle(Request $request, Closure $next)
     {
-        $existe = false;
-        $codes = Code::all();
-        foreach($codes as $code){
-            if($request('code') == $code->code){
-                $existe = true;
-                break;
-            }
+        if(Auth::user()->type === 'directeur'){
+        return $next($request);
         }
-        if($existe){
-            return $next($request);
-        }
-        return redirect(route('register'));
+        $mess = "Dear".Auth::user()->name."this area is just for the Directers";
+            return view('alert',compact('mess'));
     }
 }
