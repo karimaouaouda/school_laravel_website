@@ -17,6 +17,9 @@ mix.js('resources/js/app.js', 'public/js')
         require('tailwindcss'),
     ]);
 
+    mix.js('resources/js/ADN3D.js', 'public/threed')
+    .version();
+
 if (mix.inProduction()) {
     mix.version();
 }
